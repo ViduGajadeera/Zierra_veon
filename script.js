@@ -166,11 +166,21 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: "power4.inOut"
     }, "<")
     .set('.preloader', {
-        display: "none"
+        autoAlpha: 0
     })
     .call(() => {
         lenis.start();
         document.body.style.overflow = '';
+        
+        // Scroll to hash if present in URL after preloader finishes
+        if (window.location.hash) {
+            setTimeout(() => {
+                const targetEl = document.querySelector(window.location.hash);
+                if (targetEl) {
+                    lenis.scrollTo(targetEl, { offset: -80 }); // Offset for header
+                }
+            }, 100);
+        }
     }, null, "-=0.2")
     // Intro Animations for Hero
     .fromTo('.hero-title .char', 
@@ -341,6 +351,129 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrub: true
             }
         });
+    });
+
+    // --- 9. PAGE ROUTING & TRANSITIONS ---
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const targetUrl = this.getAttribute('href');
+            
+            // Ignore if no href, new tab, or external link
+            if (!targetUrl || this.getAttribute('target') === '_blank' || targetUrl.startsWith('http') || targetUrl.startsWith('mailto:') || targetUrl.startsWith('tel:')) {
+                return;
+            }
+
+            const targetSplit = targetUrl.split('#');
+            let targetPage = targetSplit[0];
+            const targetHash = targetSplit[1] ? '#' + targetSplit[1] : '';
+
+            // Normalize current path and target path to base identifiers ('/' or '/services')
+            let currentPath = window.location.pathname;
+            if (currentPath.endsWith('/') || currentPath.endsWith('index.html')) {
+                currentPath = '/';
+            } else if (currentPath.endsWith('services') || currentPath.endsWith('services.html')) {
+                currentPath = '/services';
+            }
+
+            if (targetPage === '' || targetPage === './' || targetPage === '/' || targetPage.endsWith('index.html')) {
+                targetPage = '/';
+            } else if (targetPage === 'services' || targetPage.endsWith('services') || targetPage.endsWith('services.html')) {
+                targetPage = '/services';
+            }
+
+            // Same page navigation
+            if (targetPage === currentPath) {
+                e.preventDefault();
+                // Close mobile menu if open
+                const navList = document.querySelector('.nav-list');
+                if (navList && navList.style.display === 'flex' && window.innerWidth <= 768) {
+                    navList.style.display = 'none';
+                }
+                
+                // If there's a hash, find the element. If no hash, we scroll to top!
+                const targetEl = targetHash ? document.querySelector(targetHash) : document.body;
+                
+                if (targetEl) {
+                    // Kill any running preloader animations to prevent glitches
+                    gsap.killTweensOf('.preloader, .door-left, .door-right, .preloader-content, .preloader-progress, .preloader-text');
+                    
+                    // Play the door transition animation with countdown
+                    const transitionTl = gsap.timeline();
+                    transitionTl.set('.preloader', { autoAlpha: 1, zIndex: 9999 })
+                              .set('.preloader-content', { opacity: 0 }) 
+                              .set('.door-left', { xPercent: -100 })
+                              .set('.door-right', { xPercent: 100 })
+                              .set('.preloader-text', { y: 0, opacity: 1 })
+                              .set('.preloader-progress', { innerText: "0%", opacity: 1 })
+                              // Close doors (slowed slightly for smoothness)
+                              .to('.door-left', { xPercent: 0, duration: 1.0, ease: "power4.inOut" })
+                              .to('.door-right', { xPercent: 0, duration: 1.0, ease: "power4.inOut" }, "<")
+                              // Show content and count up fast
+                              .to('.preloader-content', { opacity: 1, duration: 0.2 })
+                              .to('.preloader-progress', { innerText: "100%", duration: 0.6, snap: { innerText: 1 }, ease: "power2.inOut" })
+                              // Fade out text
+                              .to('.preloader-text', { y: -30, opacity: 0, duration: 0.4, ease: "power3.in" })
+                              .to('.preloader-progress', { opacity: 0, duration: 0.3 }, "<")
+                              .call(() => {
+                                  // Jump instantly to the section or top
+                                  if (targetHash) {
+                                      lenis.scrollTo(targetEl, { offset: -80, immediate: true });
+                                      if (history.pushState) {
+                                          history.pushState(null, null, targetHash);
+                                      } else {
+                                          window.location.hash = targetHash;
+                                      }
+                                  } else {
+                                      lenis.scrollTo(0, { immediate: true });
+                                      if (history.pushState) {
+                                          history.pushState(null, null, currentPath);
+                                      }
+                                  }
+                              })
+                              // Open the doors again
+                              .to('.door-left', { xPercent: -100, duration: 1.2, ease: "power4.inOut", delay: 0.1 })
+                              .to('.door-right', { xPercent: 100, duration: 1.2, ease: "power4.inOut" }, "<")
+                              .set('.preloader', { autoAlpha: 0 });
+                }
+                return;
+            }
+
+            // Cross-page navigation: play exit animation
+            e.preventDefault();
+            
+            // Close mobile menu if open
+            const navList = document.querySelector('.nav-list');
+            if (navList && navList.style.display === 'flex' && window.innerWidth <= 768) {
+                navList.style.display = 'none';
+            }
+
+            // Kill any running tweens
+            gsap.killTweensOf('.preloader, .door-left, .door-right, .preloader-content');
+
+            const exitTl = gsap.timeline({
+                onComplete: () => {
+                    window.location.href = targetUrl;
+                }
+            });
+
+            // Close the preloader doors without countdown (the next page load handles the countdown)
+            exitTl.set('.preloader', { autoAlpha: 1, zIndex: 9999 })
+                  .set('.preloader-content', { opacity: 0 })
+                  .set('.door-left', { xPercent: -100 })
+                  .set('.door-right', { xPercent: 100 })
+                  // Close doors
+                  .to('.door-left', { xPercent: 0, duration: 1.0, ease: "power4.inOut" })
+                  .to('.door-right', { xPercent: 0, duration: 1.0, ease: "power4.inOut" }, "<");
+        });
+    });
+
+    // Fix for Back-Forward Cache restoring the page with doors closed
+    window.addEventListener('pageshow', (e) => {
+        if (e.persisted) {
+            gsap.set('.preloader', { autoAlpha: 0 });
+            gsap.set('.door-left', { xPercent: -100 });
+            gsap.set('.door-right', { xPercent: 100 });
+        }
     });
 
 });
