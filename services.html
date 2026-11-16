@@ -117,7 +117,7 @@
 
   <!-- DYNAMIC SERVICES GRID -->
   <div class="services-page-grid" id="full-services-container">
-    <!-- Static Fallback Content: Visible immediately to AI bots, crawlers, and users -->
+    <!-- Static Initial Content: Every single service from the official salon menu is rendered in raw HTML so AI crawlers & Google can read them instantly, while live Google Sheet data hydrates & updates them in real time -->
     <div class="price-card static-card">
       <h3 class="service-title">Gents — Package Deals</h3>
       <ul class="service-list">
@@ -126,8 +126,9 @@
         <li><span>Haircut + Beard Trim + Wash + Head Massage (10 mins)</span><span>LKR 3,000</span></li>
       </ul>
     </div>
+
     <div class="price-card static-card">
-      <h3 class="service-title">Gents — Hair &amp; Beard</h3>
+      <h3 class="service-title">Gents — Hair &amp; Beard Services</h3>
       <ul class="service-list">
         <li><span>Classic Haircut + Wash</span><span>LKR 1,500</span></li>
         <li><span>Kids Haircut (Under 10)</span><span>LKR 1,000</span></li>
@@ -140,50 +141,129 @@
         <li><span>Oil Treatment</span><span>LKR 3,000</span></li>
       </ul>
     </div>
+
     <div class="price-card static-card">
-      <h3 class="service-title">Ladies — Hair Cuts &amp; Styling</h3>
+      <h3 class="service-title">Ladies — Hair Cuts</h3>
       <ul class="service-list">
-        <li><span>Ladies Haircut with Setting</span><span>LKR 3,500</span></li>
         <li><span>Ladies Hair Trim (No Setting)</span><span>LKR 2,500</span></li>
+        <li><span>Ladies Haircut with Setting</span><span>LKR 3,500</span></li>
+        <li><span>Kids's Cut</span><span>LKR 2,000</span></li>
+      </ul>
+    </div>
+
+    <div class="price-card static-card">
+      <h3 class="service-title">Ladies — Styling</h3>
+      <ul class="service-list">
         <li><span>Wash and Blowdry</span><span>LKR 2,500</span></li>
         <li><span>Ironing</span><span>LKR 2,000</span></li>
         <li><span>Hair Bun</span><span>LKR 1,500</span></li>
         <li><span>Braids</span><span>LKR 3,500 onwards</span></li>
       </ul>
     </div>
+
     <div class="price-card static-card">
-      <h3 class="service-title">Ladies — Hair Color &amp; Treatments</h3>
+      <h3 class="service-title">Ladies — Hair Color</h3>
       <ul class="service-list">
         <li><span>Root Touch-up</span><span>LKR 3,500 onwards</span></li>
         <li><span>Half Head Color</span><span>LKR 10,000 onwards</span></li>
         <li><span>Highlights</span><span>LKR 20,000 onwards</span></li>
         <li><span>Full Head Color</span><span>LKR 20,000 onwards</span></li>
         <li><span>Balayage</span><span>LKR 25,000 onwards</span></li>
-        <li><span>Keratin Treatments</span><span>LKR 25,000 onwards</span></li>
-        <li><span>Hair Relaxing</span><span>LKR 20,000 onwards</span></li>
+        <li><span>Dimensional 2-3 Color</span><span>LKR 30,000 onwards</span></li>
+        <li><span>Color Correction</span><span>LKR 20,000 onwards</span></li>
       </ul>
     </div>
+
     <div class="price-card static-card">
-      <h3 class="service-title">Beauty — Nails, Pedicure &amp; Manicure</h3>
+      <h3 class="service-title">Ladies — Treatments</h3>
+      <ul class="service-list">
+        <li><span>Oil Treatment</span><span>LKR 3,000</span></li>
+        <li><span>Deep Conditioning</span><span>LKR 3,000</span></li>
+        <li><span>Hair Relaxing</span><span>LKR 20,000 onwards</span></li>
+        <li><span>Keratin Treatments</span><span>LKR 25,000 onwards</span></li>
+      </ul>
+    </div>
+
+    <div class="price-card static-card">
+      <h3 class="service-title">Beauty — Manicure</h3>
       <ul class="service-list">
         <li><span>Express Manicure</span><span>LKR 1,500</span></li>
+        <li><span>Hand Massage (20 mins)</span><span>LKR 2,000</span></li>
         <li><span>Full Manicure</span><span>LKR 2,500</span></li>
-        <li><span>Express Pedicure</span><span>LKR 2,000</span></li>
-        <li><span>Full Pedicure</span><span>LKR 3,000</span></li>
-        <li><span>Acrylic Nails</span><span>LKR 6,500</span></li>
-        <li><span>Eye Brows Threading</span><span>LKR 350</span></li>
-        <li><span>Full Face Threading</span><span>LKR 1,500</span></li>
+        <li><span>Manicure with Gel Color</span><span>LKR 3,500</span></li>
       </ul>
     </div>
+
     <div class="price-card static-card">
-      <h3 class="service-title">Facials &amp; Clean Ups</h3>
+      <h3 class="service-title">Beauty — Pedicure</h3>
+      <ul class="service-list">
+        <li><span>Express Pedicure</span><span>LKR 2,000</span></li>
+        <li><span>Foot Massage (20 mins)</span><span>LKR 3,000</span></li>
+        <li><span>Full Pedicure</span><span>LKR 3,000</span></li>
+        <li><span>Pedicure with Gel Color</span><span>LKR 4,000</span></li>
+      </ul>
+    </div>
+
+    <div class="price-card static-card">
+      <h3 class="service-title">Beauty — Nail Care</h3>
+      <ul class="service-list">
+        <li><span>Normal Color Removal</span><span>LKR 250</span></li>
+        <li><span>Gel Color Removal</span><span>LKR 1,000</span></li>
+        <li><span>Normal Color Application (Cut, File &amp; Shape)</span><span>LKR 1,000</span></li>
+        <li><span>Gel Color Application (Cut, File &amp; Shape)</span><span>LKR 2,000</span></li>
+        <li><span>Acrylic Nail Removal</span><span>LKR 2,000</span></li>
+        <li><span>Nail Tips with Gel Color</span><span>LKR 3,500</span></li>
+        <li><span>Gel Build Up</span><span>LKR 6,000</span></li>
+        <li><span>Acrylic Nails</span><span>LKR 6,500</span></li>
+      </ul>
+    </div>
+
+    <div class="price-card static-card">
+      <h3 class="service-title">Beauty — Threading</h3>
+      <ul class="service-list">
+        <li><span>Upper Lip</span><span>LKR 250</span></li>
+        <li><span>Chin</span><span>LKR 250</span></li>
+        <li><span>Eye Brows</span><span>LKR 350</span></li>
+        <li><span>Full Face</span><span>LKR 1,500</span></li>
+      </ul>
+    </div>
+
+    <div class="price-card static-card">
+      <h3 class="service-title">Facials &amp; Clean Ups — Clean Ups</h3>
       <ul class="service-list">
         <li><span>Derma Pro Clean Up</span><span>LKR 2,500</span></li>
         <li><span>Kejo Clean Up</span><span>LKR 2,500</span></li>
+        <li><span>Jovees Clean Up</span><span>LKR 3,000</span></li>
+        <li><span>Ume Care Clean Up</span><span>LKR 5,000</span></li>
+      </ul>
+    </div>
+
+    <div class="price-card static-card">
+      <h3 class="service-title">Facials &amp; Clean Ups — Facials</h3>
+      <ul class="service-list">
+        <li><span>Derma Pro Facial</span><span>LKR 4,000</span></li>
+        <li><span>Kejo Facial</span><span>LKR 4,500</span></li>
         <li><span>Jovees Facial</span><span>LKR 5,000</span></li>
         <li><span>Ume Care Facial</span><span>LKR 7,000</span></li>
+      </ul>
+    </div>
+
+    <div class="price-card static-card">
+      <h3 class="service-title">Facials &amp; Clean Ups — Hydra Facials</h3>
+      <ul class="service-list">
         <li><span>Kejo Hydra Facial</span><span>LKR 10,000</span></li>
+        <li><span>Jovees Hydra Facial</span><span>LKR 12,500</span></li>
         <li><span>Ume Care Hydra Facial</span><span>LKR 15,000</span></li>
+      </ul>
+    </div>
+
+    <div class="price-card static-card">
+      <h3 class="service-title">Facials &amp; Clean Ups — Extras</h3>
+      <ul class="service-list">
+        <li><span>White &amp; Black Head Removal</span><span>LKR 1,500</span></li>
+        <li><span>LED Light Therapy</span><span>LKR 2,000</span></li>
+        <li><span>High Frequency Treatment</span><span>LKR 2,000</span></li>
+        <li><span>Relaxing Face Massage</span><span>LKR 2,500</span></li>
       </ul>
     </div>
   </div>
