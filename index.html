@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zierra Veon | Modern Hair &amp; Beauty Studio – Malabe</title>
-  <meta name="description" content="Zierra Veon is a modern, full-service hair, nail, and beauty studio in Malabe, Sri Lanka catering to both men and women.">
+  <title>Zierra Veon | Luxury Unisex Hair &amp; Beauty Salon in Malabe</title>
+  <meta name="description" content="Premium hair, nail &amp; beauty salon in Malabe, Sri Lanka. Expert gents grooming, ladies styling, balayage, keratin treatments &amp; facials. Book via WhatsApp.">
+  <link rel="canonical" href="https://zierraveon.com/">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,33 +18,101 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "HairSalon",
-    "name": "Zierra Veon",
-    "description": "Zierra Veon is a modern, full-service hair, nail, and beauty studio in Malabe, Sri Lanka catering to both men and women. We offer gents grooming, haircuts, styling, coloring, and chemical treatments.",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "No. 757 / 28B, Kaduwela Road",
-      "addressLocality": "Malabe",
-      "addressCountry": "LK"
-    },
-    "telephone": "+94743181001",
-    "url": "https://zierraveon.com",
-    "sameAs": [
-      "https://www.facebook.com/zierraveon/",
-      "https://www.instagram.com/zierraveon/"
-    ],
-    "openingHoursSpecification": [
+    "@graph": [
       {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "10:00",
-        "closes": "21:00"
+        "@type": "HairSalon",
+        "@id": "https://zierraveon.com/#salon",
+        "name": "Zierra Veon",
+        "alternateName": "Salon Zierra Veon Malabe",
+        "url": "https://zierraveon.com",
+        "logo": "https://zierraveon.com/assets/hero.jpg",
+        "image": [
+          "https://zierraveon.com/assets/salon.jpg",
+          "https://zierraveon.com/assets/salon_doors.jpg"
+        ],
+        "description": "Zierra Veon is a premier unisex hair, nail, and beauty salon located in Malabe, Sri Lanka, offering precision haircuts, grooming, hair coloring, keratin, and skincare.",
+        "telephone": "+94743181001",
+        "priceRange": "LKR 250 - LKR 30000",
+        "currenciesAccepted": "LKR",
+        "paymentAccepted": "Cash, Credit Card",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "No. 757 / 28B, Kaduwela Road",
+          "addressLocality": "Malabe",
+          "addressRegion": "Western Province",
+          "postalCode": "10115",
+          "addressCountry": "LK"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 6.9062361,
+          "longitude": 79.9429368
+        },
+        "hasMap": "https://maps.google.com/?cid=17988583486307672197",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "10:00",
+            "closes": "21:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Saturday", "Sunday"],
+            "opens": "10:00",
+            "closes": "19:00"
+          }
+        ],
+        "sameAs": [
+          "https://www.facebook.com/zierraveon/",
+          "https://www.instagram.com/zierraveon/"
+        ]
       },
       {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Saturday", "Sunday"],
-        "opens": "10:00",
-        "closes": "19:00"
+        "@type": "WebSite",
+        "@id": "https://zierraveon.com/#website",
+        "url": "https://zierraveon.com",
+        "name": "Zierra Veon",
+        "publisher": {
+          "@id": "https://zierraveon.com/#salon"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Where is Zierra Veon Salon located in Malabe?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Zierra Veon is located at No. 757 / 28B, Kaduwela Road, Malabe, Sri Lanka. The salon is situated along the main Kaduwela-Malabe route with parking available."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What services does Zierra Veon offer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Zierra Veon is a unisex salon offering gents haircuts and beard trims, ladies cuts and coloring (balayage, highlights), keratin treatments, manicures, pedicures, nail extensions, and facials."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are the opening hours of Zierra Veon Salon?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Open Tuesday to Friday from 10:00 AM to 9:00 PM, and Saturday to Sunday from 10:00 AM to 7:00 PM. Closed on Mondays."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can I book an appointment at Zierra Veon?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bookings can be made directly via WhatsApp at +94 74 318 1001 or by calling 074 31 81 001."
+            }
+          }
+        ]
       }
     ]
   }
@@ -105,7 +174,7 @@
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="home">
     <div class="hero-bg">
-      <img src="assets/hero.jpg" alt="Zierra Veon Model" class="hero-img" data-gsap="parallax">
+      <img src="assets/hero.jpg" alt="Luxury Hair and Beauty Transformation Model at Zierra Veon Salon Malabe" class="hero-img" data-gsap="parallax">
       <div class="hero-overlay"></div>
     </div>
     <div class="hero-body">
@@ -133,7 +202,7 @@
       <p class="showcase-sub">Step into a modern, relaxing atmosphere crafted to make every visit feel exceptional.</p>
     </div>
     <div class="showcase-media">
-      <img src="assets/salon.jpg" alt="Zierra Veon Interior" class="showcase-img" data-gsap="parallax">
+      <img src="assets/salon.jpg" alt="Modern Minimalist Interior Atmosphere at Zierra Veon Salon Malabe" class="showcase-img" data-gsap="parallax">
     </div>
   </section>
 
@@ -146,13 +215,13 @@
       <a href="https://www.instagram.com/zierraveon/" target="_blank" rel="noopener noreferrer" class="apple-link">See our portfolio &#8594;</a>
     </div>
     <div class="showcase-media">
-      <img src="assets/model_transformation.jpg" alt="Hair Transformation" class="showcase-img" data-gsap="parallax">
+      <img src="assets/model_transformation.jpg" alt="Professional Ladies Hair Cut and Color Balayage Transformation" class="showcase-img" data-gsap="parallax">
     </div>
   </section>
 
   <!-- ===================== SHOWCASE 3 — Full Bleed ===================== -->
   <section class="showcase-fullbleed" data-gsap="fade-up">
-    <img src="assets/premium_clipper.jpg" alt="Premium Tools" class="fullbleed-img" data-gsap="parallax">
+    <img src="assets/premium_clipper.jpg" alt="Premium Hair Clipper and Barber Grooming Tools at Zierra Veon" class="fullbleed-img" data-gsap="parallax">
     <div class="fullbleed-caption">
       <p class="showcase-eyebrow showcase-eyebrow-light">Premium Tools</p>
       <h2 class="showcase-title showcase-title-light">Only the best,<br>for the best.</h2>
@@ -207,27 +276,27 @@
     <div class="gallery-grid">
       <!-- Large feature left -->
       <div class="gallery-item gallery-item--tall" data-gsap="fade-up" data-delay="0">
-        <img src="assets/salon.jpg" alt="Zierra Veon Salon Interior" class="gallery-img">
+        <img src="assets/salon.jpg" alt="Hair Styling Stations and Salon Interior Zierra Veon Malabe" class="gallery-img">
         <div class="gallery-overlay"><span>The Studio</span></div>
       </div>
       <!-- Top right -->
       <div class="gallery-item" data-gsap="fade-up" data-delay="0.1">
-        <img src="assets/salon_doors.jpg" alt="Zierra Veon Entrance" class="gallery-img">
+        <img src="assets/salon_doors.jpg" alt="Zierra Veon Studio Entrance Doors at Kaduwela Road Malabe" class="gallery-img">
         <div class="gallery-overlay"><span>Welcome In</span></div>
       </div>
       <!-- Bottom right top -->
       <div class="gallery-item" data-gsap="fade-up" data-delay="0.2">
-        <img src="assets/premium_clipper.jpg" alt="Premium Tools" class="gallery-img">
+        <img src="assets/premium_clipper.jpg" alt="Professional Hair Styling and Barbering Equipment" class="gallery-img">
         <div class="gallery-overlay"><span>Premium Tools</span></div>
       </div>
       <!-- Bottom strip left -->
       <div class="gallery-item gallery-item--wide" data-gsap="fade-up" data-delay="0.1">
-        <img src="assets/model_transformation.jpg" alt="Hair Transformation" class="gallery-img">
+        <img src="assets/model_transformation.jpg" alt="Before and After Hair Coloring Treatment Result" class="gallery-img">
         <div class="gallery-overlay"><span>The Work</span></div>
       </div>
       <!-- Bottom strip right -->
       <div class="gallery-item" data-gsap="fade-up" data-delay="0.2">
-        <img src="assets/hero.jpg" alt="Zierra Veon Model" class="gallery-img">
+        <img src="assets/hero.jpg" alt="Finished Model Hair Style at Zierra Veon Salon" class="gallery-img">
         <div class="gallery-overlay"><span>The Result</span></div>
       </div>
     </div>
@@ -239,6 +308,44 @@
       <h2 class="apple-headline">Ready for a<br>transformation?</h2>
       <p class="apple-body">Book your appointment today via WhatsApp. We're open Tuesday through Sunday.</p>
       <a href="https://wa.me/94743181001" target="_blank" rel="noopener noreferrer" class="btn-pill btn-pill-dark">Book via WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ SECTION (AEO/GEO Optimized) ===================== -->
+  <section class="intro-text" id="faq" style="background-color: var(--apple-ash); padding: 5rem 2rem;">
+    <div class="container-narrow">
+      <p class="section-eyebrow text-center">Frequently Asked Questions</p>
+      <h2 class="apple-headline text-center" style="margin-bottom: 3rem;">Everything You Need To Know</h2>
+      
+      <div style="display: flex; flex-direction: column; gap: 2rem; text-align: left;">
+        <div>
+          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--apple-dark);">Where is Zierra Veon Salon located in Malabe?</h3>
+          <p class="apple-body" style="margin: 0; max-width: 100%;">
+            Zierra Veon is located at No. 757 / 28B, Kaduwela Road, Malabe, Sri Lanka. The salon is situated along the main Kaduwela-Malabe route, offering convenient parking and access for clients from Malabe, Battaramulla, Kaduwela, and surrounding suburbs.
+          </p>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--apple-dark);">What services does Zierra Veon offer?</h3>
+          <p class="apple-body" style="margin: 0; max-width: 100%;">
+            Zierra Veon provides full-service salon treatments for men and women, including classic haircuts, beard shaping, balayage, hair coloring, keratin smoothing, relaxing treatments, manicures, pedicures, acrylic nails, and specialized facials using Kejo, Jovees, Ume Care, and Derma Pro brands.
+          </p>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--apple-dark);">What are the opening hours of Zierra Veon Salon?</h3>
+          <p class="apple-body" style="margin: 0; max-width: 100%;">
+            The studio is open Tuesday through Friday from 10:00 AM to 9:00 PM, and Saturday through Sunday from 10:00 AM to 7:00 PM. The salon is closed on Mondays.
+          </p>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--apple-dark);">How can I book an appointment at Zierra Veon?</h3>
+          <p class="apple-body" style="margin: 0; max-width: 100%;">
+            Appointments can be booked instantly by messaging the salon directly via WhatsApp at +94 74 318 1001 or by calling 074 31 81 001. Walk-ins are also welcome based on stylist availability.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
