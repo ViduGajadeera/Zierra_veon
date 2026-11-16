@@ -168,11 +168,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =========================================================
-    // 7. GOOGLE SHEETS CSV FETCH (Promo Banner + Services page)
+    // 7. GOOGLE SHEETS CSV FETCH (Promo Banner, Services page, Home Teaser)
     // =========================================================
     const servicesContainer = document.getElementById('full-services-container');
     const loadingText = document.getElementById('services-loading');
     const promoBanner = document.getElementById('promo-banner');
+    const homeServicesGrid = document.getElementById('home-services-grid');
 
     // Published Google Sheet CSV URL
     const googleSheetCSVUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_4qiLeKQdrotj1T9Ln9QZC7iFSNI4FCaxcsAKeWNte0ohWAOhhNZ9J8jsTeyLYM8zmaQ0R9jHpc7u/pub?gid=0&single=true&output=csv';
@@ -209,40 +210,72 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // --- Services Grid (services.html only) ---
-            if (servicesContainer) {
-                const categories = {};
-                const schemaOffers = [];
+            // Group all services and calculate minimum prices per category
+            const categories = {};
+            const schemaOffers = [];
+            const minPrices = {
+                Gents: Infinity,
+                Ladies: Infinity,
+                Beauty: Infinity,
+                Facials: Infinity
+            };
 
-                rows.forEach(row => {
-                    if (row.length >= 3) {
-                        const category    = row[0].replace(/^"|"$/g, '').trim();
-                        const serviceName = row[1].replace(/^"|"$/g, '').trim();
-                        const price       = row[2].replace(/^"|"$/g, '').trim();
+            rows.forEach(row => {
+                if (row.length >= 3) {
+                    const category    = row[0].replace(/^"|"$/g, '').trim();
+                    const serviceName = row[1].replace(/^"|"$/g, '').trim();
+                    const price       = row[2].replace(/^"|"$/g, '').trim();
 
-                        if (category.toUpperCase() === 'PROMO') return;
+                    if (category.toUpperCase() === 'PROMO') return;
 
-                        if (category && serviceName) {
-                            if (!categories[category]) categories[category] = [];
-                            categories[category].push({ name: serviceName, price });
+                    if (category && serviceName) {
+                        if (!categories[category]) categories[category] = [];
+                        categories[category].push({ name: serviceName, price });
 
-                            // Extract numerical price for Schema Offer (if available)
-                            const numericPriceMatch = price.replace(/,/g, '').match(/\d+/);
-                            const numericPrice = numericPriceMatch ? numericPriceMatch[0] : null;
+                        // Extract numerical price
+                        const numericPriceMatch = price.replace(/,/g, '').match(/\d+/);
+                        const numericVal = numericPriceMatch ? parseInt(numericPriceMatch[0], 10) : null;
 
-                            schemaOffers.push({
-                                "@type": "Offer",
-                                "itemOffered": {
-                                    "@type": "Service",
-                                    "name": serviceName,
-                                    "category": category
-                                },
-                                ...(numericPrice ? { "price": numericPrice, "priceCurrency": "LKR" } : {})
-                            });
+                        if (numericVal !== null && !isNaN(numericVal)) {
+                            const catLower = category.toLowerCase();
+                            if (catLower.includes('gent')) {
+                                minPrices.Gents = Math.min(minPrices.Gents, numericVal);
+                            } else if (catLower.includes('lad')) {
+                                minPrices.Ladies = Math.min(minPrices.Ladies, numericVal);
+                            } else if (catLower.includes('beauty') || catLower.includes('pedicure') || catLower.includes('manicure') || catLower.includes('nail') || catLower.includes('threading')) {
+                                minPrices.Beauty = Math.min(minPrices.Beauty, numericVal);
+                            } else if (catLower.includes('facial') || catLower.includes('clean up')) {
+                                minPrices.Facials = Math.min(minPrices.Facials, numericVal);
+                            }
                         }
+
+                        schemaOffers.push({
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": serviceName,
+                                "category": category
+                            },
+                            ...(numericVal ? { "price": String(numericVal), "priceCurrency": "LKR" } : {})
+                        });
+                    }
+                }
+            });
+
+            // Update Home Page "What We Offer" Teaser Cards dynamically from Google Sheet
+            if (homeServicesGrid) {
+                const cards = homeServicesGrid.querySelectorAll('.service-apple-card');
+                cards.forEach(card => {
+                    const catKey = card.getAttribute('data-category');
+                    const priceEl = card.querySelector('.service-from');
+                    if (catKey && minPrices[catKey] && minPrices[catKey] !== Infinity && priceEl) {
+                        priceEl.textContent = `From LKR ${minPrices[catKey].toLocaleString()}`;
                     }
                 });
+            }
 
+            // --- Services Grid (services.html only) ---
+            if (servicesContainer) {
                 if (loadingText) loadingText.remove();
 
                 for (const [category, services] of Object.entries(categories)) {
