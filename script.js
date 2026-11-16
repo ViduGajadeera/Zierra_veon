@@ -174,8 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingText = document.getElementById('services-loading');
     const promoBanner = document.getElementById('promo-banner');
 
-    // REPLACE THIS URL WITH YOUR PUBLISHED GOOGLE SHEET CSV LINK
-    const googleSheetCSVUrl = 'INSERT_YOUR_GOOGLE_SHEET_CSV_LINK_HERE';
+    // Published Google Sheet CSV URL
+    const googleSheetCSVUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_4qiLeKQdrotj1T9Ln9QZC7iFSNI4FCaxcsAKeWNte0ohWAOhhNZ9J8jsTeyLYM8zmaQ0R9jHpc7u/pub?gid=0&single=true&output=csv';
 
     fetch(googleSheetCSVUrl)
         .then(response => {
@@ -183,10 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.text();
         })
         .then(csvText => {
-            // Parse CSV (handles quoted commas)
-            const rows = csvText.split('\n').map(row =>
-                row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
-            );
+            // Parse CSV (handles quoted commas & carriage returns)
+            const rows = csvText
+                .replace(/\r/g, '')
+                .split('\n')
+                .filter(line => line.trim().length > 0)
+                .map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
 
             rows.shift(); // Remove header row
 
@@ -210,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // --- Services Grid (services.html only) ---
             if (servicesContainer) {
                 const categories = {};
+                const schemaOffers = [];
 
                 rows.forEach(row => {
                     if (row.length >= 3) {
@@ -222,6 +225,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (category && serviceName) {
                             if (!categories[category]) categories[category] = [];
                             categories[category].push({ name: serviceName, price });
+
+                            // Extract numerical price for Schema Offer (if available)
+                            const numericPriceMatch = price.replace(/,/g, '').match(/\d+/);
+                            const numericPrice = numericPriceMatch ? numericPriceMatch[0] : null;
+
+                            schemaOffers.push({
+                                "@type": "Offer",
+                                "itemOffered": {
+                                    "@type": "Service",
+                                    "name": serviceName,
+                                    "category": category
+                                },
+                                ...(numericPrice ? { "price": numericPrice, "priceCurrency": "LKR" } : {})
+                            });
                         }
                     }
                 });
@@ -245,6 +262,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     html += '</ul>';
                     card.innerHTML = html;
                     servicesContainer.appendChild(card);
+                }
+
+                // Inject Structured Data (Schema.org) for Search Engines & AI Agents
+                if (schemaOffers.length > 0) {
+                    const existingLd = document.getElementById('ai-price-schema');
+                    if (existingLd) existingLd.remove();
+
+                    const scriptLd = document.createElement('script');
+                    scriptLd.id = 'ai-price-schema';
+                    scriptLd.type = 'application/ld+json';
+                    scriptLd.textContent = JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "HairSalon",
+                        "name": "Zierra Veon",
+                        "url": "https://zierraveon.com",
+                        "hasOfferCatalog": {
+                            "@type": "OfferCatalog",
+                            "name": "Zierra Veon Price & Services List",
+                            "itemListElement": schemaOffers
+                        }
+                    });
+                    document.head.appendChild(scriptLd);
                 }
             }
         })
