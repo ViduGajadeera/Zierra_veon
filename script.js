@@ -278,6 +278,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (servicesContainer) {
                 if (loadingText) loadingText.remove();
 
+                // If Google Sheet rows are loaded, clear initial static placeholder cards
+                const staticCards = servicesContainer.querySelectorAll('.static-card');
+                if (Object.keys(categories).length > 0) {
+                    staticCards.forEach(c => c.remove());
+                }
+
                 for (const [category, services] of Object.entries(categories)) {
                     const card = document.createElement('div');
                     card.className = 'price-card';
