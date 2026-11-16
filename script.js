@@ -282,18 +282,33 @@ document.addEventListener('DOMContentLoaded', () => {
                     const card = document.createElement('div');
                     card.className = 'price-card';
 
-                    let html = `<h3 class="service-title">${category}</h3><ul class="service-list">`;
+                    const title = document.createElement('h3');
+                    title.className = 'service-title';
+                    title.textContent = category;
+                    card.appendChild(title);
+
+                    const list = document.createElement('ul');
+                    list.className = 'service-list';
 
                     services.forEach(s => {
                         let displayPrice = s.price;
                         if (displayPrice && !displayPrice.toLowerCase().includes('lkr')) {
                             displayPrice = `LKR ${displayPrice}`;
                         }
-                        html += `<li><span>${s.name}</span><span>${displayPrice}</span></li>`;
+
+                        const li = document.createElement('li');
+                        const nameSpan = document.createElement('span');
+                        nameSpan.textContent = s.name;
+
+                        const priceSpan = document.createElement('span');
+                        priceSpan.textContent = displayPrice;
+
+                        li.appendChild(nameSpan);
+                        li.appendChild(priceSpan);
+                        list.appendChild(li);
                     });
 
-                    html += '</ul>';
-                    card.innerHTML = html;
+                    card.appendChild(list);
                     servicesContainer.appendChild(card);
                 }
 
